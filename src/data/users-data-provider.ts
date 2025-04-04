@@ -6,20 +6,14 @@ const httpClient = fetchUtils.fetchJson;
 
 export const userDataProvider = {
   getList: async (params: any) => {
-    const { page, pageSize } = params;
  
-     const query = new URLSearchParams({
-      page: String(page),
-      pageSize: String(pageSize)
-    });
-  
-    const { json } = await httpClient(`${url}?${query.toString()}`);
+    const { json } = await httpClient(`${url}`);
   
     return {
-      data: json.data.map((user: any) => ({ id: user.user_id, ...user })),
-      total: json.total,
+      data: json.map((user: any) => ({ id: user.user_id, ...user })),
+      total: json.lenght,
     };
-  };
+  },
 
   getOne: async (params: any) => {
     const { json } = await httpClient(`${url}/${params.id}`);
@@ -27,3 +21,4 @@ export const userDataProvider = {
   },
 
 };
+
